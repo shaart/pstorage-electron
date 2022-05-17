@@ -1,10 +1,24 @@
-# PStorage - offline portable password storage desktop app
+## Install
 
-# Start in dev mode
-`npm run start`
+Install dependencies:
 
-# Build
-`npm run build`
+```bash
+npm install
+```
 
-# Release
-`npm run release`
+
+## Starting Development
+
+Start the app in the `dev` environment:
+
+```bash
+npm start
+```
+
+## Packaging for Production
+
+To package apps for the local platform:
+
+```bash
+npm run package
+```
