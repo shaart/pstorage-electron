@@ -1,3 +1,4 @@
+import openAboutWindow from 'about-window';
 import {
   app,
   Menu,
@@ -5,6 +6,7 @@ import {
   BrowserWindow,
   MenuItemConstructorOptions,
 } from 'electron';
+import { getAssetPath } from './util';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -155,29 +157,27 @@ export default class MenuBuilder {
       label: 'Help',
       submenu: [
         {
-          label: 'Learn More',
+          label: 'About',
           click() {
-            shell.openExternal('https://electronjs.org');
+            openAboutWindow({
+              icon_path: getAssetPath('icon.png'),
+            });
           },
         },
         {
           label: 'Documentation',
           click() {
             shell.openExternal(
-              'https://github.com/electron/electron/tree/main/docs#readme'
+              'https://github.com/shaart/pstorage-electron/wiki'
             );
-          },
-        },
-        {
-          label: 'Community Discussions',
-          click() {
-            shell.openExternal('https://www.electronjs.org/community');
           },
         },
         {
           label: 'Search Issues',
           click() {
-            shell.openExternal('https://github.com/electron/electron/issues');
+            shell.openExternal(
+              'https://github.com/shaart/pstorage-electron/issues'
+            );
           },
         },
       ],
@@ -198,11 +198,7 @@ export default class MenuBuilder {
         label: '&File',
         submenu: [
           {
-            label: '&Open',
-            accelerator: 'Ctrl+O',
-          },
-          {
-            label: '&Close',
+            label: '&Quit',
             accelerator: 'Ctrl+W',
             click: () => {
               this.mainWindow.close();
@@ -256,29 +252,27 @@ export default class MenuBuilder {
         label: 'Help',
         submenu: [
           {
-            label: 'Learn More',
+            label: 'About',
             click() {
-              shell.openExternal('https://electronjs.org');
+              openAboutWindow({
+                icon_path: getAssetPath('icon.png'),
+              });
             },
           },
           {
             label: 'Documentation',
             click() {
               shell.openExternal(
-                'https://github.com/electron/electron/tree/main/docs#readme'
+                'https://github.com/shaart/pstorage-electron/wiki'
               );
-            },
-          },
-          {
-            label: 'Community Discussions',
-            click() {
-              shell.openExternal('https://www.electronjs.org/community');
             },
           },
           {
             label: 'Search Issues',
             click() {
-              shell.openExternal('https://github.com/electron/electron/issues');
+              shell.openExternal(
+                'https://github.com/shaart/pstorage-electron/issues'
+              );
             },
           },
         ],
