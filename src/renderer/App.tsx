@@ -1,9 +1,6 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-
-const Passwords = () => {
-  return <div>Place for a table with passwords</div>;
-};
+import Passwords from './Passwords';
 
 export default function App() {
   return (

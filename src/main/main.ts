@@ -14,6 +14,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath, getAssetPath } from './util';
+import TrayMenu from './tray';
 
 export default class AppUpdater {
   constructor() {
@@ -92,6 +93,8 @@ const createWindow = async () => {
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
+  const trayMenu = new TrayMenu();
+  trayMenu.createTrayMenu();
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
