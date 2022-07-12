@@ -17,6 +17,10 @@ import { resolveHtmlPath, getAssetPath } from './util';
 import TrayMenu from './tray';
 import Dao from './db/dao';
 
+const isDev = require('electron-is-dev');
+
+const APPLICATION_VERSION = app.getVersion();
+
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';
@@ -67,7 +71,7 @@ const createWindow = async () => {
     show: false,
     width: 1024,
     height: 728,
-    icon: getAssetPath('icon.png'),
+    icon: getAssetPath('icon64.png'),
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
@@ -81,6 +85,11 @@ const createWindow = async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+
+    autoUpdater.checkForUpdatesAndNotify().catch((error) => {
+      log.error('An error occurred on updates check with notifying', error);
+    });
+
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
@@ -95,7 +104,14 @@ const createWindow = async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
   const trayMenu = new TrayMenu();
-  trayMenu.createTrayMenu();
+  trayMenu.createTrayMenu(() => {
+    if (mainWindow == null) {
+      createWindow();
+      return;
+    }
+
+    mainWindow.show();
+  });
 
   const dao = new Dao();
   dao.runSample();
@@ -134,3 +150,27 @@ app
     });
   })
   .catch(console.log);
+
+ipcMain.on('app_version', (event) => {
+  const appVersion = isDev ? APPLICATION_VERSION : app.getVersion();
+  event.sender.send('app_version', {
+    version: appVersion,
+  });
+});
+
+ipcMain.on('restart_app', () => {
+  log.info('Got "restart_app" event in main process.');
+  autoUpdater.quitAndInstall(true, true);
+  app.exit();
+});
+
+if (!isDev) {
+  autoUpdater.on('update-available', () => {
+    log.info('Got "update-available" event. Sending to main window...');
+    mainWindow?.webContents.send('update_available');
+  });
+  autoUpdater.on('update-downloaded', () => {
+    log.info('Got "update-downloaded" event. Sending to main window...');
+    mainWindow?.webContents.send('update_downloaded');
+  });
+}
