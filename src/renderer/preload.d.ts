@@ -1,15 +1,15 @@
-import { Channels } from '../main/preload';
+import { Channels } from "shared/constants";
 
 declare global {
   interface Window {
     electron: {
       ipcRenderer: {
-        sendMessage(channel: Channels, args: unknown[]): void;
-        on(
-          channel: string,
-          func: (...args: unknown[]) => void
+        sendMessage<T>(channel: Channels, args: T): void;
+        on<T>(
+          channel: Channels,
+          func: (args: T) => void
         ): (() => void) | undefined;
-        once(channel: string, func: (...args: unknown[]) => void): void;
+        once(channel: Channels, func: (...args: unknown[]) => void): void;
       };
     };
   }

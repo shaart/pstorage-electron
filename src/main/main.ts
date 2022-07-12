@@ -16,6 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath, getAssetPath } from './util';
 import TrayMenu from './tray';
 import Dao from './db/dao';
+import { Channels } from '../shared/constants';
 
 const isDev = require('electron-is-dev');
 
@@ -151,10 +152,12 @@ app
   })
   .catch(console.log);
 
-ipcMain.on('app_version', (event) => {
+ipcMain.on(Channels.APP_VERSION, (event) => {
+  log.info(`Got \'${Channels.APP_VERSION}\' event`);
   const appVersion = isDev ? APPLICATION_VERSION : app.getVersion();
-  event.sender.send('app_version', {
+  event.sender.send(Channels.APP_VERSION, {
     version: appVersion,
+    name: app.getName(),
   });
 });
 

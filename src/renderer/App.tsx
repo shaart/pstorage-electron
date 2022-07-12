@@ -1,13 +1,18 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Passwords from './Passwords';
+import Footer from './Footer';
+import Main from './Main';
 
 export default function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Passwords />} />
-      </Routes>
+      <div>
+        <Routes>
+          <Route path="/" element={<Main />} />
+        </Routes>
+        <hr/>
+        <Footer/>
+      </div>
     </Router>
   );
 }
