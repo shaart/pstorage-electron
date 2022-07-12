@@ -1,3 +1,7 @@
+## About
+
+Desktop password storage app written using `Electron`, `React` and `sqlite3`.
+
 ## Install
 
 Install dependencies:
@@ -5,7 +9,6 @@ Install dependencies:
 ```bash
 npm install
 ```
-
 
 ## Starting Development
 

@@ -15,6 +15,7 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath, getAssetPath } from './util';
 import TrayMenu from './tray';
+import Dao from './db/dao';
 
 export default class AppUpdater {
   constructor() {
@@ -95,6 +96,9 @@ const createWindow = async () => {
   menuBuilder.buildMenu();
   const trayMenu = new TrayMenu();
   trayMenu.createTrayMenu();
+
+  const dao = new Dao();
+  dao.runSample();
 
   // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
