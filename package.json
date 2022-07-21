@@ -31,7 +31,8 @@
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest",
-    "release": "npm run electron-builder build --win --publish never",
+    "build-release": "electron-builder build --win -p never",
+    "release": "electron-builder build --win -p always",
     "prettier:fix": "npm run prettier -- --write"
   },
   "lint-staged": {
@@ -179,6 +180,7 @@
   "build": {
     "productName": "pstorage",
     "appId": "com.github.shaart.pstorage-electron",
+    "artifactName": "${productName}-v${version}-${os}.${ext}",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -217,8 +219,9 @@
     },
     "win": {
       "target": [
-        "nsis"
-      ]
+        "portable"
+      ],
+      "icon": "icon512.png"
     },
     "linux": {
       "target": [
