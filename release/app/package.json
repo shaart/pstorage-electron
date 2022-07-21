@@ -1,0 +1,18 @@
+{
+  "name": "pstorage-electron",
+  "version": "0.0.1",
+  "description": "PStorage - offline portable password storage desktop appA foundation for scalable desktop apps",
+  "license": "GPL-3.0",
+  "author": {
+    "name": "Artur Shalaev",
+    "email": "imshaart@gmail.com",
+    "url": "https://github.com/shaart"
+  },
+  "main": "./dist/main/main.js",
+  "scripts": {
+    "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
+    "postinstall": "npm run electron-rebuild && npm run link-modules",
+    "link-modules": "node -r ts-node/register ../../.erb/scripts/link-modules.ts"
+  },
+  "dependencies": {}
+}
