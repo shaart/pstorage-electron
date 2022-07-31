@@ -16,7 +16,7 @@ import MenuBuilder from './menu';
 import { resolveHtmlPath, getAssetPath } from './util';
 import TrayMenu from './tray';
 import Dao from './db/dao';
-import { Channels } from '../shared/constants';
+import { Channels, Password, User } from '../shared/constants';
 
 const isDev = require('electron-is-dev');
 
@@ -159,6 +159,38 @@ ipcMain.on(Channels.APP_VERSION, (event) => {
     version: appVersion,
     name: app.getName(),
   });
+});
+
+ipcMain.on(Channels.GET_CURRENT_USER, (event) => {
+  // todo call the dao.js
+  log.info(`Got \'${Channels.GET_CURRENT_USER}\' event`);
+
+  event.sender.send(Channels.GET_CURRENT_USER, {
+    id: "ae24be20-21c9-45f7-bbf7-1969f25e478b",
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    version: 1,
+    name: "test",
+    masterPassword: "123",
+    passwords: [
+      {
+        id: "fbdb58e5-870e-445f-b8ea-16cb539d7cca",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: "ae24be20-21c9-45f7-bbf7-1969f25e478b",
+        alias: "main pwd",
+        value: "sampleMainPwdValue",
+      },
+      {
+        id: "afeda913-a7c1-4eb2-94e1-1642aa3ea0eb",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        userId: "ae24be20-21c9-45f7-bbf7-1969f25e478b",
+        alias: "second pwd",
+        value: "secondPwdValue",
+      },
+    ] as Password[],
+  } as User);
 });
 
 ipcMain.on('restart_app', () => {

@@ -6,11 +6,11 @@ import Main from './Main';
 export default function App() {
   return (
     <Router>
-      <div>
+      {/* todo adaptive */}
+      <div style={{ height: 600, width: 800}}>
         <Routes>
           <Route path="/" element={<Main />} />
         </Routes>
-        <hr/>
         <Footer/>
       </div>
     </Router>
